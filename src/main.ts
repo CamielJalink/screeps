@@ -1,4 +1,5 @@
 import harvester from "./roles/harvester";
+import upgrader from "./roles/upgrader";
 import spawnCreeps from "./logic/spawnCreeps";
 
 spawnCreeps();
@@ -9,6 +10,9 @@ for(creepName in Game.creeps){
 
   if(creep.memory.role == "harvester"){
     harvester(creep);
+  }
+  else if(creep.memory.role == "upgrader"){
+    upgrader(creep);
   }
 }
 

@@ -11,5 +11,4 @@ export default function harvester(creep: Creep) {
       creep.moveTo(homeSpawn);
     }
   }
-  
 }
