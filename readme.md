@@ -1,0 +1,1 @@
+Repository for my Screeps code using typescript and webpack.
