@@ -9,6 +9,12 @@ export default function harvester(creep: Creep) {
     }
   });
 
+  homeSpawn.room.find(FIND_STRUCTURES).forEach((structure) => {
+    if(structure.structureType === "container" && structure.store.getFreeCapacity("energy") !== 0){
+      fillableStructures.push(structure);
+    }
+  })
+
   if(creep.store.getFreeCapacity() != 0){
     if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
       creep.moveTo(sources[0]);

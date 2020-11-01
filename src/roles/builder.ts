@@ -10,7 +10,10 @@ export default function builder(creep: Creep) {
     creep.memory.builderMode = 'withdraw';
   }
 
-  if(creep.memory.builderMode == "withdraw"){
+  if(constructionSites.length === 0 && creep.memory.builderMode === "build"){
+    creep.moveTo(homeSpawn);
+  }
+  else if(creep.memory.builderMode == "withdraw"){
     if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE){
       creep.moveTo(sources[0]);
     }

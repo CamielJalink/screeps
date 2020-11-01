@@ -15,14 +15,13 @@ function checkIfShouldSpawn(homeSpawn: StructureSpawn){
     }
   })
   let spawnEnergy = extensionEnergy + homeSpawn.store.getUsedCapacity("energy");
-  console.log(spawnEnergy);
 
   let creeps: Creep[] = homeSpawn.room.find(FIND_MY_CREEPS);
   let harvesterCreeps: Creep[] = creeps.filter((creep) => creep.memory.role == 'harvester');
   let upgraderCreeps: Creep[] = creeps.filter((creep) => creep.memory.role == 'upgrader');
   let builderCreeps: Creep[] = creeps.filter((creep) => creep.memory.role == 'builder');
 
-  if (spawnEnergy >= 200 && harvesterCreeps.length < 4) {
+  if (spawnEnergy >= 200 && harvesterCreeps.length < 8) {
     let name = 'Harvester' + Memory.creepCounters.harvesterCounter;
     homeSpawn.spawnCreep([MOVE, CARRY, WORK], name, { memory: { role: 'harvester' } })
     Memory.creepCounters.harvesterCounter = Memory.creepCounters.harvesterCounter + 1;
