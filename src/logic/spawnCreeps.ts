@@ -6,7 +6,6 @@ export default function spawnCreeps(){
   }
 }
 
-
 function checkIfShouldSpawn(homeSpawn: StructureSpawn){
 
   let spawnEnergy = homeSpawn.store.getUsedCapacity("energy");
@@ -14,6 +13,7 @@ function checkIfShouldSpawn(homeSpawn: StructureSpawn){
 
   let harvesterCreeps: Creep[] = creeps.filter((creep) => creep.memory.role == 'harvester');
   let upgraderCreeps: Creep[] = creeps.filter((creep) => creep.memory.role == 'upgrader');
+  let builderCreeps: Creep[] = creeps.filter((creep) => creep.memory.role == 'builder');
 
   if (spawnEnergy > 200 && upgraderCreeps.length < 4) {
     let name = 'Upgrader' + Memory.creepCounters.upgraderCounter;
@@ -30,5 +30,15 @@ function checkIfShouldSpawn(homeSpawn: StructureSpawn){
     homeSpawn.spawnCreep([MOVE,CARRY,WORK], name, {memory: {role: 'harvester'}})
     Memory.creepCounters.harvesterCounter = Memory.creepCounters.harvesterCounter + 1;
     return;
+  }
+  else if (spawnEnergy > 200 && builderCreeps.length < 6){
+    let name = 'Builder' + Memory.creepCounters.builderCounter;
+    let memory = {
+      role: 'builder',
+      builderMode: 'withdraw',
+      // Nog iets van een veld dat hij nu aan het builden is?
+    }
+    homeSpawn.spawnCreep([MOVE, CARRY, WORK], name, { memory })
+    Memory.creepCounters.builderCounter = Memory.creepCounters.builderCounter + 1;
   }
 };
