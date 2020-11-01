@@ -5,7 +5,7 @@ enum memoryNames {
 };
 
 export function checkMemoryProps(){
-  let memoryProps: memoryNames[] = [memoryNames.harvesterCounter, memoryNames.upgraderCounter, memoryNames .builderCounter];
+  let memoryProps: memoryNames[] = [memoryNames.harvesterCounter, memoryNames.upgraderCounter, memoryNames.builderCounter];
 
   memoryProps.forEach((prop) => {
     if(!Memory.creepCounters[prop]){
