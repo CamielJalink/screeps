@@ -31,7 +31,7 @@ function checkIfShouldSpawn(homeSpawn: StructureSpawn){
     Memory.creepCounters.harvesterCounter = Memory.creepCounters.harvesterCounter + 1;
     return;
   }
-  else if (spawnEnergy > 200 && builderCreeps.length < 6){
+  else if (spawnEnergy > 200 && builderCreeps.length < 4){
     let name = 'Builder' + Memory.creepCounters.builderCounter;
     let memory = {
       role: 'builder',
