@@ -4,12 +4,10 @@ export default function harvester(creep: Creep) {
   let fillableStructures: Structure[] = [];
 
   homeSpawn.room.find(FIND_MY_STRUCTURES).forEach((structure) => {
-    if((structure.structureType === "spawn" || structure.structureType === "extension") && structure.store.getFreeCapacity() !== 0){
+    if((structure.structureType === "spawn" || structure.structureType === "extension") && structure.store.getFreeCapacity("energy") !== 0){
       fillableStructures.push(structure);
     }
   });
-
-  console.log(fillableStructures);
 
   if(creep.store.getFreeCapacity() != 0){
     if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
@@ -18,6 +16,9 @@ export default function harvester(creep: Creep) {
   } else{
     if (creep.transfer(fillableStructures[0], "energy") == ERR_NOT_IN_RANGE){
       creep.moveTo(fillableStructures[0]);
+    }
+    else{
+      creep.moveTo(homeSpawn); // Don't stand around the mining node please!
     }
   }
 }
