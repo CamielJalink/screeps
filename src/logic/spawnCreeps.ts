@@ -23,7 +23,11 @@ function checkIfShouldSpawn(homeSpawn: StructureSpawn){
 
   if (spawnEnergy >= 200 && harvesterCreeps.length < 8) {
     let name = 'Harvester' + Memory.creepCounters.harvesterCounter;
-    homeSpawn.spawnCreep([MOVE, CARRY, WORK], name, { memory: { role: 'harvester' } })
+    let memory = {
+      role: 'harvester',
+      harvesterMode: 'mine'
+    }
+    homeSpawn.spawnCreep([MOVE, CARRY, WORK], name, { memory })
     Memory.creepCounters.harvesterCounter = Memory.creepCounters.harvesterCounter + 1;
     return;
   }
