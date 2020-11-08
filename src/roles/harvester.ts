@@ -16,26 +16,42 @@ export default function harvester(creep: Creep) {
   })
 
 
-  if (creep.memory.harvesterMode === "mine" && creep.store.getFreeCapacity("energy") === 0) {
-    creep.memory.harvesterMode = "deliver";
-  }
-  else if(creep.memory.harvesterMode === "deliver" && creep.store.getUsedCapacity("energy") === 0){
+  const creepEmpty: boolean = (creep.store.getUsedCapacity("energy") === 0);
+  const creepFull: boolean = (creep.store.getFreeCapacity("energy") === 0);
+  const fillTargets: boolean = (fillableStructures.length > 0);
+
+
+  if (creepEmpty){
     creep.memory.harvesterMode = "mine";
   }
+  else if (!creepFull && creep.memory.harvesterMode === "mine"){
+    creep.memory.harvesterMode = "mine";
+  }
+  else if (!creepFull && !fillTargets){
+    creep.memory.harvesterMode = "mine";
+  }
+  else if (creepFull && fillTargets){
+    creep.memory.harvesterMode = "deliver";
+  }
+  else if (!creepFull && fillTargets && creep.memory.harvesterMode ==="deliver"){
+    creep.memory.harvesterMode = "deliver";
+  }
+  else if (creepFull && !fillTargets){
+    creep.memory.harvesterMode = "idle";
+  }
 
 
-// Als in mine mode. Ga minen.
   if (creep.memory.harvesterMode === "mine") {
-    if(creep.harvest(sources[0]) === ERR_NOT_IN_RANGE){
+    if (creep.harvest(sources[0]) === ERR_NOT_IN_RANGE){
       creep.moveTo(sources[0]);
     };
   }
-  else if (creep.memory.harvesterMode === "deliver" && fillableStructures.length > 0){ // Is there anything to fill? 
-    if (creep.transfer(fillableStructures[0], "energy") === ERR_NOT_IN_RANGE) { // Then fill it
-      creep.moveTo(fillableStructures[0]); // Or move towards it
+  else if (creep.memory.harvesterMode === "deliver"){
+    if (creep.transfer(fillableStructures[0], "energy") === ERR_NOT_IN_RANGE) {
+      creep.moveTo(fillableStructures[0]);
     }
   }
-  else{
+  else if (creep.memory.harvesterMode === "idle") {
     creep.moveTo(homeSpawn); // Don't stand around the mining node please!
   }
 }
